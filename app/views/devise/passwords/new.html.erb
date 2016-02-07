@@ -1,0 +1,14 @@
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {class: "form-signin", method: :post}) do |f| %>
+
+  <h2 class="form-signin-heading">Forgot your password?</h2>
+
+  <div class="field">
+    <%= f.email_field :email, class: "form-control", placeholder: "Email", autofocus: true %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Reset password", class: "btn btn-lg btn-primary btn-block" %>
+    <%= render "devise/shared/links" %>
+  </div>
+<% end %>
+

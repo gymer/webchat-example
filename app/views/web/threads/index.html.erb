@@ -1,0 +1,9 @@
+<div class="pull-right">
+  <br /><br />
+  <strong><%= current_user.name %></strong>&nbsp;&nbsp;&nbsp;&nbsp;
+  <%= link_to 'Logout', destroy_user_session_path, :method => :delete %>
+</div>
+<h1>Gymer webchat</h1><br />
+<div id="chat"></div>
+
+<%= javascript_include_tag 'application' %>

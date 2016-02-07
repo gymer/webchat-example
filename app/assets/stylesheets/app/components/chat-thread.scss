@@ -1,0 +1,12 @@
+.b-chat-thread {
+  .panel-heading {
+    .label {
+      vertical-align: middle;
+      margin-left: 10px;
+    }
+  }
+
+  &__add {
+    position: relative;
+  }
+}
