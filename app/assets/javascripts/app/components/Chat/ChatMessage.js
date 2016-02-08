@@ -2,7 +2,7 @@ import Moment from 'moment'
 import React, { Component, PropTypes } from 'react'
 import ChatContactImg from './ChatContactImg'
 
-class ChatThreadMessage extends Component {
+class ChatMessage extends Component {
   render() {
     const { message } = this.props
     let moment = Moment(message.date)
@@ -28,8 +28,8 @@ class ChatThreadMessage extends Component {
   }
 }
 
-ChatThreadMessage.propTypes = {
+ChatMessage.propTypes = {
   message: PropTypes.object.isRequired
 }
 
-export default ChatThreadMessage
+export default ChatMessage

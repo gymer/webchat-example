@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "web/registrations"}
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :contacts, only: [:index]
+    resources :dialogs, only: [:index, :show, :create, :update]
   end
 
   # Example resource route with options:

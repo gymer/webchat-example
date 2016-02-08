@@ -8,16 +8,20 @@ export function fetchContacts(contacts) {
   return { type: types.FETCH_CONTACTS, contacts };
 }
 
-export function newThread(userId) {
-  return { type: types.NEW_THREAD, userId };
+export function fetchDialogs(dialogs) {
+  return { type: types.FETCH_DIALOGS, dialogs };
 }
 
-export function activateThread(threadId) {
-  return { type: types.ACTIVATE_THREAD, threadId };
+export function newDialog(userId) {
+  return { type: types.NEW_DIALOG, userId };
 }
 
-export function addThreadMember(threadId, userId) {
-  return { type: types.ADD_THREAD_MEMBER, threadId, userId };
+export function activateDialog(dialogId) {
+  return { type: types.ACTIVATE_DIALOG, dialogId };
+}
+
+export function addDialogMember(dialogId, userId) {
+  return { type: types.ADD_DIALOG_MEMBER, dialogId, userId };
 }
 
 export function sendMessage(message) {
