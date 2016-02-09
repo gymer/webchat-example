@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  namespace :api do
+  get 'messages/index'
+  end
+
+  namespace :api do
+  get 'messages/create'
+  end
+
+  namespace :api do
+  get 'messages/show'
+  end
+
   devise_for :users, :controllers => {:registrations => "web/registrations"}
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -13,14 +25,17 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   scope module: 'web' do
-    root to: "threads#index"
+    root to: "chat#index"
 
-    resources :threads, only: [:index, :create, :update, :destroy]
+    resources :chat, only: [:index]
   end
 
   namespace :api do
     resources :contacts, only: [:index]
-    resources :dialogs, only: [:index, :show, :create, :update]
+
+    resources :dialogs, only: [:index, :show, :create, :update] do
+      resources :messages, only: [:index]
+    end
   end
 
   # Example resource route with options:

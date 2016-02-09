@@ -2,19 +2,6 @@ import { FETCH_CONTACTS, FETCH_DIALOGS, USER_CONNECT, NEW_DIALOG, ACTIVATE_DIALO
 
 const me = {id: 0, name: 'Me', online: true};
 
-const contacts = [];
-
-const dialogs = [
-  {
-    id: 1,
-    members: contacts.slice(0, 2),
-    messages: [
-      {id: 1, dialogId: 1, user: contacts[0], text: "Привет всем в этом чате!", date: 1454775280529},
-      {id: 2, dialogId: 1, user: contacts[1], text: "Привет привет!", date: 1454775258936}
-    ]
-  }
-];
-
 let newDialog = (state, userId) => {
   return {
     id: state.dialogs.length+1,
@@ -25,8 +12,8 @@ let newDialog = (state, userId) => {
 
 const initialState = {
   activeDialogId: null,
-  dialogs: dialogs,
-  contacts: contacts
+  dialogs: [],
+  contacts: []
 }
 
 export default function chat(state = initialState, action) {

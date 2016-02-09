@@ -16,11 +16,9 @@ class App extends Component {
   }
 
   activateDialog(id) {
-    // actions.activateDialog
-    rest({path: 'dialogs/' + id}).then(res => {
-      console.log(res)
+    rest({path: `dialogs/${id}/messages`}).then(res => {
+      this.props.actions.activateDialog(id, res.entity)
     })
-    // this.props.actions.newDialog
   }
 
   newDialog(userId) {

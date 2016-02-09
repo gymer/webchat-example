@@ -16,8 +16,8 @@ export function newDialog(userId) {
   return { type: types.NEW_DIALOG, userId };
 }
 
-export function activateDialog(dialogId) {
-  return { type: types.ACTIVATE_DIALOG, dialogId };
+export function activateDialog(dialogId, messages = []) {
+  return { type: types.ACTIVATE_DIALOG, dialogId, messages };
 }
 
 export function addDialogMember(dialogId, userId) {

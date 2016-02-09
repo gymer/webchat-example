@@ -9,6 +9,10 @@ class ChatDialog extends Component {
     this.state = {contactsOpen: false};
   }
 
+  componentDidUpdate() {
+    this.refs.message.focus()
+  }
+
   onSubmit(e) {
     e.preventDefault();
     let text = this.refs.message.value.trim();
@@ -33,6 +37,8 @@ class ChatDialog extends Component {
 
   render() {
     const { contacts, dialog, actions } = this.props
+    let members = dialog.members.map(m => contacts.find(u => u.id === m.user_id))
+
     return (
       <div className="panel panel-default b-chat-thread">
         <div className="panel-heading">
@@ -43,12 +49,13 @@ class ChatDialog extends Component {
             </ul>
           </div>
           CHAT with
-          {dialog.members.map(user =>
+          {members.map(user =>
             <span key={user.id} className="label label-primary">{user.name}</span>
           )}
         </div>
         <div className="panel-body">
           <ul className="media-list">
+            {dialog.messages.length === 0 ? <p className="text-center">Напишите что-нибудь</p> : null}
             {dialog.messages.map(message =>
               <ChatMessage key={message.id} message={message}></ChatMessage>
             )}
@@ -56,7 +63,7 @@ class ChatDialog extends Component {
         </div>
         <div className="panel-footer">
           <form onSubmit={this.onSubmit.bind(this)} className="input-group">
-            <input type="text" ref="message" className="form-control" placeholder="Enter Message" />
+            <input type="text" autoFocus ref="message" className="form-control" placeholder="Enter Message" />
             <span className="input-group-btn">
               <button className="btn btn-info" type="button">SEND</button>
             </span>
