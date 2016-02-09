@@ -1,16 +1,4 @@
 Rails.application.routes.draw do
-  namespace :api do
-  get 'messages/index'
-  end
-
-  namespace :api do
-  get 'messages/create'
-  end
-
-  namespace :api do
-  get 'messages/show'
-  end
-
   devise_for :users, :controllers => {:registrations => "web/registrations"}
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -32,9 +20,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :contacts, only: [:index]
+    resources :profile, only: [:index]
 
     resources :dialogs, only: [:index, :show, :create, :update] do
-      resources :messages, only: [:index]
+      resources :messages, only: [:index, :create]
     end
   end
 

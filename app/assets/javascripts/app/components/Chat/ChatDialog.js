@@ -36,8 +36,14 @@ class ChatDialog extends Component {
   }
 
   render() {
-    const { contacts, dialog, actions } = this.props
-    let members = dialog.members.map(m => contacts.find(u => u.id === m.user_id))
+    const { me, contacts, dialog, actions } = this.props
+    let members = dialog.members.map(member => (member.user_id === me.id) ? me : contacts.find(u => u.id === member.user_id))
+        members.push(me)
+
+    let messages = dialog.messages.map(message => {
+      message.user = members.find(member => member.id === message.user_id)
+      return message
+    })
 
     return (
       <div className="panel panel-default b-chat-thread">
@@ -50,13 +56,13 @@ class ChatDialog extends Component {
           </div>
           CHAT with
           {members.map(user =>
-            <span key={user.id} className="label label-primary">{user.name}</span>
+            (user.id != me.id) ? <span key={user.id} className="label label-primary">{user.name}</span> : null
           )}
         </div>
         <div className="panel-body">
           <ul className="media-list">
-            {dialog.messages.length === 0 ? <p className="text-center">Напишите что-нибудь</p> : null}
-            {dialog.messages.map(message =>
+            {messages.length === 0 ? <p className="text-center">Напишите что-нибудь</p> : null}
+            {messages.map(message =>
               <ChatMessage key={message.id} message={message}></ChatMessage>
             )}
           </ul>
@@ -75,6 +81,7 @@ class ChatDialog extends Component {
 }
 
 ChatDialog.propTypes = {
+  me: PropTypes.object.isRequired,
   contacts: PropTypes.arrayOf(PropTypes.object),
   dialog: PropTypes.object.isRequired,
   onMessageSubmit: PropTypes.func,

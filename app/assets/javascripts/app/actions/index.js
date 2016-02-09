@@ -4,6 +4,10 @@ export function userConnect(id) {
   return { type: types.USER_CONNECT, id };
 }
 
+export function fetchProfile(profile) {
+  return { type: types.FETCH_PROFILE, profile };
+}
+
 export function fetchContacts(contacts) {
   return { type: types.FETCH_CONTACTS, contacts };
 }
@@ -12,8 +16,8 @@ export function fetchDialogs(dialogs) {
   return { type: types.FETCH_DIALOGS, dialogs };
 }
 
-export function newDialog(userId) {
-  return { type: types.NEW_DIALOG, userId };
+export function newDialog(dialog) {
+  return { type: types.NEW_DIALOG, dialog };
 }
 
 export function activateDialog(dialogId, messages = []) {

@@ -7,7 +7,14 @@ class Api::MessagesController < ApplicationController
   end
 
   def create
-    byebug
+    message = @dialog.messages.new(message_params)
+    message.user_id = current_user.id
+
+    if message.save
+      render json: message
+    else
+      render json: message.errors, status: 400
+    end
   end
 
   def show
@@ -17,5 +24,9 @@ class Api::MessagesController < ApplicationController
 
   def set_dialog
     @dialog = Dialog.find(params[:dialog_id])
+  end
+
+  def message_params
+    params.permit(:text)
   end
 end

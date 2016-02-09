@@ -3,6 +3,11 @@
 
 .panel.with-nav-tabs .panel-heading {
   padding: 5px 5px 0 5px;
+
+  .badge {
+    color: #fff;
+    background-color: #777;
+  }
 }
 .panel.with-nav-tabs .nav-tabs {
   border-bottom: none;

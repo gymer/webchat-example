@@ -1,4 +1,4 @@
-import { FETCH_CONTACTS, FETCH_DIALOGS, USER_CONNECT, NEW_DIALOG, ACTIVATE_DIALOG, ADD_DIALOG_MEMBER, SEND_MESSAGE } from '../constants/ActionTypes'
+import { FETCH_PROFILE, FETCH_CONTACTS, FETCH_DIALOGS, USER_CONNECT, NEW_DIALOG, ACTIVATE_DIALOG, ADD_DIALOG_MEMBER, SEND_MESSAGE } from '../constants/ActionTypes'
 
 const me = {id: 0, name: 'Me', online: true};
 
@@ -11,6 +11,7 @@ let newDialog = (state, userId) => {
 }
 
 const initialState = {
+  me: null,
   activeDialogId: null,
   dialogs: [],
   contacts: []
@@ -20,6 +21,11 @@ export default function chat(state = initialState, action) {
   switch (action.type) {
     case USER_CONNECT:
       return Object.assign({}, state, {})
+
+    case FETCH_PROFILE:
+      return Object.assign({}, state, {
+        me: action.profile
+      })
 
     case FETCH_CONTACTS:
       return Object.assign({}, state, {
@@ -32,18 +38,23 @@ export default function chat(state = initialState, action) {
       })
 
     case NEW_DIALOG:
-      let dialog = newDialog(state, action.userId)
+      action.dialog.members = action.dialog.members.filter(member => member.user_id != state.me.id)
+      debugger
       return Object.assign({}, state, {
-        activeDialogId: dialog.id,
+        activeDialogId: action.dialog.id,
         dialogs: [
           ...state.dialogs,
-          dialog
+          action.dialog
         ]
       })
 
-    case ACTIVATE_DIALOG:
+    case ACTIVATE_DIALOG: {
       let activeDialogId = action.dialogId
-      return Object.assign({}, state, {activeDialogId})
+      let messages = action.messages
+      return Object.assign({}, state, {
+        activeDialogId
+      })
+    }
 
     case ADD_DIALOG_MEMBER: {
       let user = state.contacts.find(u => u.id === action.userId)
@@ -64,11 +75,11 @@ export default function chat(state = initialState, action) {
 
     case SEND_MESSAGE:
       let dialogs = state.dialogs.map(dialog => {
-        if (dialog.id == action.message.dialogId) {
+        if (dialog.id == action.message.dialog_id) {
           dialog = Object.assign({}, dialog, {
             messages: [
               ...dialog.messages,
-              Object.assign({id: dialog.messages.length+1, user: me, date: +(new Date())}, action.message)
+              action.message
             ]
           })
         }

@@ -11,6 +11,7 @@ class App extends Component {
     super(props);
     const { actions } = this.props
 
+    rest({path: 'profile' }).then(res => actions.fetchProfile(res.entity))
     rest({path: 'contacts' }).then(res => actions.fetchContacts(res.entity))
     rest({path: 'dialogs' }).then(res => actions.fetchDialogs(res.entity))
   }
@@ -21,11 +22,23 @@ class App extends Component {
     })
   }
 
+  messageSubmit(message) {
+    const { actions } = this.props
+    rest({
+      path: `dialogs/${message.dialogId}/messages`,
+      entity: {
+        text: message.text
+      }
+    }).then(res => actions.sendMessage(res.entity))
+  }
+
   newDialog(userId) {
-    rest({path: 'dialogs', entity: {members_attributes: [{user_id: userId}]}}).then(res => {
-      console.log(res)
-    })
-    // this.props.actions.newDialog
+    rest({
+      path: 'dialogs',
+      entity: {
+        members_attributes: [{user_id: userId}]
+      }
+    }).then(res => this.props.actions.newDialog(res.entity))
   }
 
   render() {
@@ -39,10 +52,20 @@ class App extends Component {
     return (
       <div className="row">
         <div className="col-md-8">
-          { activeDialog ? <ChatDialog dialog={activeDialog} contacts={chat.contacts} onMessageSubmit={actions.sendMessage} onAddDialogMember={actions.addDialogMember} /> : welcome}
+          { activeDialog ? <ChatDialog
+            me={chat.me}
+            dialog={activeDialog}
+            contacts={chat.contacts}
+            onMessageSubmit={this.messageSubmit.bind(this)}
+            onAddDialogMember={actions.addDialogMember} /> : welcome}
         </div>
         <div className="col-md-4">
-          <ChatContactList activeDialog={activeDialog} contacts={chat.contacts} dialogs={chat.dialogs} onSelect={this.activateDialog.bind(this)} onNewDialog={this.newDialog.bind(this)} />
+          <ChatContactList
+            activeDialog={activeDialog}
+            contacts={chat.contacts}
+            dialogs={chat.dialogs}
+            onSelect={this.activateDialog.bind(this)}
+            onNewDialog={this.newDialog.bind(this)} />
         </div>
       </div>
     )
