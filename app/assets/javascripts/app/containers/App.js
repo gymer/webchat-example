@@ -22,6 +22,19 @@ class App extends Component {
     })
   }
 
+  addDialogMember(dialogId, userId) {
+    rest({
+      path: `dialogs/${dialogId}/members`,
+      entity: {
+        user_id: userId
+      }
+    })
+    .then(res => {
+      this.props.actions.addDialogMember(dialogId, userId)
+    })
+    .catch(console.warn.bind(console))
+  }
+
   messageSubmit(message) {
     const { actions } = this.props
     rest({
@@ -57,7 +70,7 @@ class App extends Component {
             dialog={activeDialog}
             contacts={chat.contacts}
             onMessageSubmit={this.messageSubmit.bind(this)}
-            onAddDialogMember={actions.addDialogMember} /> : welcome}
+            onAddDialogMember={this.addDialogMember.bind(this)} /> : welcome}
         </div>
         <div className="col-md-4">
           <ChatContactList

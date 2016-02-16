@@ -1,6 +1,6 @@
 import { FETCH_PROFILE, FETCH_CONTACTS, FETCH_DIALOGS, USER_CONNECT, NEW_DIALOG, ACTIVATE_DIALOG, ADD_DIALOG_MEMBER, SEND_MESSAGE } from '../constants/ActionTypes'
 
-const me = {id: 0, name: 'Me', online: true};
+const me = {id: 0, name: 'Me', online: true}
 
 let newDialog = (state, userId) => {
   return {
@@ -39,7 +39,6 @@ export default function chat(state = initialState, action) {
 
     case NEW_DIALOG:
       action.dialog.members = action.dialog.members.filter(member => member.user_id != state.me.id)
-      debugger
       return Object.assign({}, state, {
         activeDialogId: action.dialog.id,
         dialogs: [
@@ -51,14 +50,22 @@ export default function chat(state = initialState, action) {
     case ACTIVATE_DIALOG: {
       let activeDialogId = action.dialogId
       let messages = action.messages
-      return Object.assign({}, state, {
-        activeDialogId
+      let dialogs  = state.dialogs.map(t => {
+        if (t.id === activeDialogId) {
+          t = Object.assign({}, t, {messages})
+        }
+
+        return t
       })
+
+      return Object.assign({}, state, {activeDialogId, dialogs})
     }
 
     case ADD_DIALOG_MEMBER: {
       let user = state.contacts.find(u => u.id === action.userId)
       let dialog = state.dialogs.find(t => t.id === action.dialogId)
+
+      console.log(user, dialog)
 
       let dialogs = state.dialogs.map(t => {
         if (t.id === dialog.id) {
@@ -67,7 +74,7 @@ export default function chat(state = initialState, action) {
           })
         }
 
-        return t;
+        return t
       })
 
       return Object.assign({}, state, {dialogs})
@@ -84,7 +91,7 @@ export default function chat(state = initialState, action) {
           })
         }
 
-        return dialog;
+        return dialog
       })
 
 

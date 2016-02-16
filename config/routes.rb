@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
     resources :dialogs, only: [:index, :show, :create, :update] do
       resources :messages, only: [:index, :create]
+      resources :members, only: [:index, :create]
     end
   end
 

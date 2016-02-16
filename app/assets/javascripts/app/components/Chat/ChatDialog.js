@@ -9,7 +9,7 @@ class ChatDialog extends Component {
     this.state = {contactsOpen: false};
   }
 
-  componentDidUpdate() {
+  componentWillReceiveProps() {
     this.refs.message.focus()
   }
 
@@ -40,6 +40,7 @@ class ChatDialog extends Component {
     let members = dialog.members.map(member => (member.user_id === me.id) ? me : contacts.find(u => u.id === member.user_id))
         members.push(me)
 
+    let memberIds = dialog.members.map(member => member.user_id)
     let messages = dialog.messages.map(message => {
       message.user = members.find(member => member.id === message.user_id)
       return message
@@ -51,7 +52,7 @@ class ChatDialog extends Component {
           <div className={classnames({'b-chat-thread__add pull-right': true, open: this.state.contactsOpen})}>
             <button type="button" className="btn btn-default btn-xs" onClick={this.toggleContacts.bind(this)}>Добавить участников</button>
             <ul className="dropdown-menu active">
-              {this.renderContacts(dialog, contacts)}
+              {this.renderContacts(dialog, contacts.filter(contact => memberIds.indexOf(contact.id) == -1))}
             </ul>
           </div>
           CHAT with
