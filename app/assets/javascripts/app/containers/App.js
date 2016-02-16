@@ -11,9 +11,28 @@ class App extends Component {
     super(props);
     const { actions } = this.props
 
-    rest({path: 'profile' }).then(res => actions.fetchProfile(res.entity))
+    rest({path: 'profile' })
+      .then(res => actions.fetchProfile(res.entity))
+      .then(this.subscribeToPushes.bind(this))
     rest({path: 'contacts' }).then(res => actions.fetchContacts(res.entity))
     rest({path: 'dialogs' }).then(res => actions.fetchDialogs(res.entity))
+  }
+
+  subscribeToPushes() {
+    const { actions, chat } = this.props
+    let gymmer = new Gymer("b55a10860022b0cc", {
+      host: "localhost:8080",
+      auth: {
+        url: "http://localhost:3000/pusher/auth",
+        method: "POST",
+        headers: {'X-CSRF-Token': "SOME_CSRF_TOKEN"}
+      }
+    });
+
+    let public_channel  = gymmer.subscribe(`chat_${chat.me.id}`);
+    // let private_channel = gymmer.subscribe('@messages');
+
+    public_channel.on('new_message', actions.recieveMessage)
   }
 
   activateDialog(id) {
@@ -29,9 +48,7 @@ class App extends Component {
         user_id: userId
       }
     })
-    .then(res => {
-      this.props.actions.addDialogMember(dialogId, userId)
-    })
+    .then(() => this.props.actions.addDialogMember(dialogId, userId))
     .catch(console.warn.bind(console))
   }
 

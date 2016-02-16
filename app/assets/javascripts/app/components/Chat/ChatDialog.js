@@ -72,7 +72,7 @@ class ChatDialog extends Component {
           <form onSubmit={this.onSubmit.bind(this)} className="input-group">
             <input type="text" autoFocus ref="message" className="form-control" placeholder="Enter Message" />
             <span className="input-group-btn">
-              <button className="btn btn-info" type="button">SEND</button>
+              <button className="btn btn-info" type="submit">SEND</button>
             </span>
           </form>
         </div>
