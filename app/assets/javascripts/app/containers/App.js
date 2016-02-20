@@ -20,10 +20,10 @@ class App extends Component {
 
   subscribeToPushes() {
     const { actions, chat } = this.props
-    let gymmer = new Gymer("b55a10860022b0cc", {
-      host: "localhost:8080",
+    let gymmer = new Gymer("62b46ef8a1f8e574", {
+      host: "staging.api.gymmer.ru",
       auth: {
-        url: "http://localhost:3000/pusher/auth",
+        url: "/pusher/auth",
         method: "POST",
         headers: {'X-CSRF-Token': "SOME_CSRF_TOKEN"}
       }

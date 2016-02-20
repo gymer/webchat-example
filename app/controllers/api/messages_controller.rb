@@ -12,11 +12,10 @@ class Api::MessagesController < ApplicationController
     members = @dialog.members.where.not({ user_id: current_user.id })
 
     @client = Gymer::Client.new({
-      :host => 'localhost',
-      :port => 8080,
-      :app_id => '4',
-      :client_access_token => 'b55a10860022b0cc',
-      :server_access_token => '9eb7696d6ff7a032'
+      :host => 'staging.api.gymmer.ru',
+      :app_id => '1',
+      :client_access_token => '62b46ef8a1f8e574',
+      :server_access_token => '9ea9485d2a7e8069'
     })
 
     if message.save
