@@ -17,3 +17,5 @@
 node_modules
 app/assets/javascripts/bundle.js
 app/assets/javascripts/bundle.js.map
+app/assets/stylesheets/main.bundle.css
+app/assets/stylesheets/main.bundle.css.map

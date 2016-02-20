@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -13,6 +14,7 @@ module.exports = {
     filename: "./app/assets/javascripts/bundle.js"
   },
   plugins: [
+    new ExtractTextPlugin('./app/assets/stylesheets/[name].bundle.css')
   ],
   module: {
     loaders: [
@@ -22,12 +24,12 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.less$/,
-        loaders: ["style", "css", "less"]
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        loader: 'url-loader?limit=100000'
+        loader: 'url-loader?name=[path][name].[ext]?limit=100000'
       }
     ]
   },

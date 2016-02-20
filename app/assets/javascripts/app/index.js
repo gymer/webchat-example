@@ -1,3 +1,5 @@
+import '../../stylesheets/vendor.css'
+
 import 'babel-polyfill'
 import 'gymmer-js-client'
 import React from 'react'
