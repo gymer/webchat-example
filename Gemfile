@@ -16,7 +16,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise'
 gem 'active_model_serializers'
-gem "gymer", :path => "/Users/akrasman/github/gymer/gymer-ruby-server"
+gem "gymer", :github => 'gymer/gymer-ruby-server'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

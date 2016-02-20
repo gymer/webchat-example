@@ -1,5 +1,6 @@
-PATH
-  remote: /Users/akrasman/github/gymer/gymer-ruby-server
+GIT
+  remote: git://github.com/gymer/gymer-ruby-server.git
+  revision: f4087cdab5aa64caea6daf2c1d804fbf068805a2
   specs:
     gymer (0.1.0)
       httparty (~> 0.13)
