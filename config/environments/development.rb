@@ -40,3 +40,11 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
+
+Gymer::Client.configure do |config|
+  config.host = 'localhost'
+  config.port = 8081
+  config.app_id = '4'
+  config.client_access_token = 'b55a10860022b0cc'
+  config.server_access_token = '9eb7696d6ff7a032'
+end

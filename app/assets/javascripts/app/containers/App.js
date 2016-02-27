@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { GYMER } from 'env'
 import ChatDialog from '../components/Chat/ChatDialog'
 import ChatContactList from '../components/Chat/ChatContactList'
 import * as ChatActions from '../actions'
@@ -20,8 +21,8 @@ class App extends Component {
 
   subscribeToPushes() {
     const { actions, chat } = this.props
-    let gymmer = new Gymer("62b46ef8a1f8e574", {
-      host: "staging.api.gymmer.ru",
+    let gymmer = new Gymer(GYMER.CLIENT_ACCESS_TOKEN, {
+      host: GYMER.HOST,
       auth: {
         url: "/pusher/auth",
         method: "POST",
@@ -81,7 +82,7 @@ class App extends Component {
 
     return (
       <div className="row">
-        <div className="col-md-8">
+        <div className="col-sm-8">
           { activeDialog ? <ChatDialog
             me={chat.me}
             dialog={activeDialog}
@@ -89,13 +90,13 @@ class App extends Component {
             onMessageSubmit={this.messageSubmit.bind(this)}
             onAddDialogMember={this.addDialogMember.bind(this)} /> : welcome}
         </div>
-        <div className="col-md-4">
-          <ChatContactList
+        <div className="col-sm-4">
+          { chat.contacts.length ? <ChatContactList
             activeDialog={activeDialog}
             contacts={chat.contacts}
             dialogs={chat.dialogs}
             onSelect={this.activateDialog.bind(this)}
-            onNewDialog={this.newDialog.bind(this)} />
+            onNewDialog={this.newDialog.bind(this)} /> : null }
         </div>
       </div>
     )

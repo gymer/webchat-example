@@ -14,7 +14,7 @@ namespace :deploy do
 
   task :webpack do
     on roles(:app) do
-      system('webpack')
+      system('ENV=#{fetch(:stage)} webpack')
       upload! './app/assets/javascripts/bundle.js', "#{fetch(:release_path)}/app/assets/javascripts/bundle.js"
       upload! './app/assets/stylesheets/main.bundle.css', "#{fetch(:release_path)}/app/assets/stylesheets/main.bundle.css"
     end

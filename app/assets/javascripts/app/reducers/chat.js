@@ -41,9 +41,10 @@ export default function chat(state = initialState, action) {
     case ACTIVATE_DIALOG: {
       let activeDialogId = action.dialogId
       let messages = action.messages
+      let lastMessage = messages[messages.length-1]
       let dialogs  = state.dialogs.map(t => {
         if (t.id === activeDialogId) {
-          t = Object.assign({}, t, {messages})
+          t = Object.assign({}, t, {messages, last_read: lastMessage ? lastMessage.id : null})
         }
 
         return t

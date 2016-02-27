@@ -43,29 +43,18 @@ class ChatContactList extends Component {
 
   render() {
     const { contacts, dialogs } = this.props
-    let listItems
-
-    if (this.state.tab == 'contacts') {
-      listItems = this.renderContacts(contacts)
-    } else {
-      listItems = this.renderDialogs(dialogs, contacts)
-    }
+    let groupDialogs = dialogs.filter(dialog => dialog.members.length > 1)
 
     return (
       <div className="panel with-nav-tabs panel-default">
-        <div className="panel-heading">
-          <ul className="nav nav-tabs">
-            <li className={classnames({active: this.state.tab == 'contacts'})}>
-              <a href="#" onClick={this.tabSelect.bind(this, 'contacts')}>Contacts <span className="badge">{contacts.length}</span></a>
-            </li>
-            <li className={classnames({active: this.state.tab == 'dialogs'})}>
-              <a href="#" onClick={this.tabSelect.bind(this, 'dialogs')}>Dialogs <span className="badge">{dialogs.length}</span></a>
-            </li>
-          </ul>
-        </div>
         <div className="panel-body">
+          <p>Chats</p>
           <ul className="media-list">
-            {listItems}
+            { this.renderDialogs(groupDialogs, contacts) }
+          </ul>
+          <p>Contacts</p>
+          <ul className="media-list">
+            { this.renderContacts(contacts) }
           </ul>
         </div>
       </div>

@@ -1,4 +1,4 @@
-class Api::MembersController < ApplicationController
+class Api::MembersController < Api::ApplicationController
   before_action :set_dialog, only: [:create]
 
   def create

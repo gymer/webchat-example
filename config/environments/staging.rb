@@ -77,3 +77,10 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
+
+Gymer::Client.configure do |config|
+  config.host = 'staging.api.gymmer.ru'
+  config.app_id = '1'
+  config.client_access_token = '62b46ef8a1f8e574'
+  config.server_access_token = '9ea9485d2a7e8069'
+end

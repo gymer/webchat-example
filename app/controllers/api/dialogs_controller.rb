@@ -1,6 +1,6 @@
-class Api::DialogsController < ApplicationController
+class Api::DialogsController < Api::ApplicationController
   def index
-    dialogs = Dialog.all.includes(:members).where.not(dialog_members: { user_id: current_user.id })
+    dialogs = current_user.dialogs.includes(:members)
     render json: dialogs
   end
 
