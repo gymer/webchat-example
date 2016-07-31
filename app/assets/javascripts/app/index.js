@@ -1,7 +1,6 @@
 import '../../stylesheets/vendor.css'
 
 import 'babel-polyfill'
-import 'gymmer-js-client'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
